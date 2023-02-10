@@ -21,18 +21,25 @@ CRUD: Create, Read (single & All), Update e Delete
 - [PUT] /mensagens{id} - Atualiza mensagens pelo ID
 */
 
-const mensagens = ["Essa é a primeira mensagem", "Essa é uma segunda mensagem"];
+const mensagens = ["Primeira mensagem", "Segunda mensagem"]
 
-// [GET] /mensagem - retorna a lista de mensagens
+  // [GET] /mensagem - retorna a lista de mensagens
 app.get('/mensagens', (req, res) => {
   res.send(mensagens.filter(Boolean));
 })
 
 // [GET] /mensagem - retorna mensagem pelo id
 app.get('/mensagens/:id', (req, res) => {
-  const id = req.params.id;
+
+  const id = req.params.id - 1;
 
   const mensagem = mensagens[id];
+
+  if (!mensagem){
+    res.send("Mensagem não encontrada")
+  }
+  
+  return;
   
   res.send(mensagem);
 });
@@ -40,7 +47,7 @@ app.get('/mensagens/:id', (req, res) => {
 // [POST] / mensagens - Cria uma nova mensagem
 app.post('/mensagens', (req, res) => {
 
-  const mensagem = req.body;
+  const mensagem = req.body.mensagem;
 
   mensagens.push(mensagem);
 
